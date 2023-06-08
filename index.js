@@ -34,10 +34,11 @@ async function run() {
     try {
         const firstCollection = client.db('a-12').collection('first')
         const usersCollection = client.db('a-12').collection('users')
+        const instructorClassCollection = client.db('a-12').collection('instructorClass')
 
-        app.get('/first', async (req, res) => {
-            res.send(await firstCollection.find().toArray())
-        })
+        // app.get('/first', async (req, res) => {
+        //     res.send(await firstCollection.find().toArray())
+        // })
 
 
         // get all users
@@ -101,6 +102,12 @@ async function run() {
             res.send(result)
         });
 
+        // save instructor class... 
+        app.post('/insturctor-class', async (req, res) => {
+            const insturctorClass = req.body
+            const result = await instructorClassCollection.insertOne(insturctorClass)
+            res.send(result);
+        });
 
 
 
