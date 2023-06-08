@@ -35,6 +35,7 @@ async function run() {
         const firstCollection = client.db('a-12').collection('first')
         const usersCollection = client.db('a-12').collection('users')
         const instructorClassCollection = client.db('a-12').collection('instructorClass')
+        const adminAprovClassCollection = client.db('a-12').collection('adminAprovClass')
 
         // app.get('/first', async (req, res) => {
         //     res.send(await firstCollection.find().toArray())
@@ -107,6 +108,30 @@ async function run() {
             const insturctorClass = req.body
             const result = await instructorClassCollection.insertOne(insturctorClass)
             res.send(result);
+        });
+
+        //get all instructor class in manageUser (admin)
+        app.get('/manage-classes', async (req, res) => {
+            res.send(await instructorClassCollection.find().toArray())
+        });
+
+        // save admin aproved class... 
+        app.post('/admin-aprove-class', async (req, res) => {
+            const adminClass = req.body
+
+            // const query = { data: user?.data.className }
+            // const existingUser = await adminAprovClassCollection.findOne(query)
+            // if (existingUser) {
+            //     return res.send({ message: 'alredy aproved' })
+            // }
+
+            const result = await adminAprovClassCollection.insertOne(adminClass)
+            res.send(result);
+        });
+
+        // get all clss that approved by admin
+        app.get('/approved-classes', async (req, res) => {
+            res.send(await adminAprovClassCollection.find().toArray())
         });
 
 
