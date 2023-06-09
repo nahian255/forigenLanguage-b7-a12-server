@@ -36,6 +36,7 @@ async function run() {
         const usersCollection = client.db('a-12').collection('users')
         const instructorClassCollection = client.db('a-12').collection('instructorClass')
         const adminAprovClassCollection = client.db('a-12').collection('adminAprovClass')
+        const selectedClassCollection = client.db('a-12').collection('selectedClass')
 
         // app.get('/first', async (req, res) => {
         //     res.send(await firstCollection.find().toArray())
@@ -115,16 +116,18 @@ async function run() {
             res.send(await instructorClassCollection.find().toArray())
         });
 
+        //get instructor class by email...
+        app.get('/manage-classes/:email', async (req, res) => {
+            const email = req.params.email
+            console.log(email);
+            const query = { instructorEmail: email }
+            const result = await instructorClassCollection.find(query).toArray()
+            res.send(result)
+        })
+
         // save admin aproved class... 
         app.post('/admin-aprove-class', async (req, res) => {
             const adminClass = req.body
-
-            // const query = { data: user?.data.className }
-            // const existingUser = await adminAprovClassCollection.findOne(query)
-            // if (existingUser) {
-            //     return res.send({ message: 'alredy aproved' })
-            // }
-
             const result = await adminAprovClassCollection.insertOne(adminClass)
             res.send(result);
         });
@@ -134,6 +137,28 @@ async function run() {
             res.send(await adminAprovClassCollection.find().toArray())
         });
 
+        // selected classes by studernt
+        app.post('/class-selected', async (req, res) => {
+            const selectClass = req.body;
+            const result = await selectedClassCollection.insertOne(selectClass)
+            res.send(result);
+        });
+
+        // get all selected classes
+        app.get('/class-selected', async (req, res) => {
+            res.send(await selectedClassCollection.find().toArray())
+        });
+
+
+
+        //delete a  selected class
+        app.delete('/class/:id', async (req, res) => {
+            const id = req.params.id
+            console.log('why not', id);
+            const query = { _id: new ObjectId(id) }
+            const result = await selectedClassCollection.deleteOne(query)
+            res.send(result);
+        });
 
 
         // Send a ping to confirm a successful connection
