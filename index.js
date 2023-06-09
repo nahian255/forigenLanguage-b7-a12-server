@@ -39,8 +39,13 @@ async function run() {
         const selectedClassCollection = client.db('a-12').collection('selectedClass')
 
         // app.get('/first', async (req, res) => {
-        //     res.send(await firstCollection.find().toArray())
-        // })
+        //     const query = { }
+        //     const option = {
+        //         sort: { "id": 6 }
+        //     }
+        //     res.send(await firstCollection.find(query, option).toArray())
+        // });
+
 
 
         // get all users
