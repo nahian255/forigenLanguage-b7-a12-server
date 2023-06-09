@@ -46,6 +46,12 @@ async function run() {
         // get all users
         app.get('/users', async (req, res) => {
             res.send(await usersCollection.find().toArray())
+        });
+
+        // get instructor user by role
+        app.get('/users/instructor', async (req, res) => {
+            const query = { role: 'instructor' }
+            res.send(await usersCollection.find(query).toArray())
         })
 
         // make admin
@@ -157,6 +163,7 @@ async function run() {
         app.delete('/class/:id', async (req, res) => {
             const id = req.params.id
             console.log('why not', id);
+            // const dbId = item._id;
             const query = { _id: new ObjectId(id) }
             const result = await selectedClassCollection.deleteOne(query)
             res.send(result);
