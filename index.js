@@ -145,8 +145,10 @@ async function run() {
         });
 
         // get all selected classes
-        app.get('/class-selected', async (req, res) => {
-            res.send(await selectedClassCollection.find().toArray())
+        app.get('/class-selected/:email', async (req, res) => {
+            const email = req.params.email
+            const query = { userEmail: email }
+            res.send(await selectedClassCollection.find(query).toArray())
         });
 
 
