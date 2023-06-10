@@ -14,15 +14,12 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json());
 
-// console.log(process.env.DB_USER);
-
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const uri = "mongodb+srv://dbuserNahian2:xF1hbjSPZPg@cluster0.lyu30gb.mongodb.net/?retryWrites=true&w=majority";
 
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}cluster0.lyu30gb.mongodb.net/?retryWrites=true&w=majority`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -38,16 +35,6 @@ async function run() {
         const instructorClassCollection = client.db('a-12').collection('instructorClass')
         const adminAprovClassCollection = client.db('a-12').collection('adminAprovClass')
         const selectedClassCollection = client.db('a-12').collection('selectedClass')
-
-        // app.get('/first', async (req, res) => {
-        //     const query = { }
-        //     const option = {
-        //         sort: { "id": 6 }
-        //     }
-        //     res.send(await firstCollection.find(query, option).toArray())
-        // });
-
-
 
         // get all users
         app.get('/users', async (req, res) => {
